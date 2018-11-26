@@ -1,0 +1,192 @@
+﻿@model WebScrach2.Models.MovieDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+
+<section class="probootstrap-section">
+    <div class="container">
+        <div class="row" style="margin-bottom:-20px; ">
+            <div class="col-md-12 section-heading probootstrap-animate">
+                <h2>Detail</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="probootstrap-card">
+                    <div class="probootstrap-card-media">
+                        <a href="/Movies/Details/@Model.movie.MovieID"><img src="@Model.movie.Image" class="img-responsive img-border" alt=""></a>
+                    </div>
+                    <div class="probootstrap-card-text">
+                        <h2 class="probootstrap-card-heading mb0">@Model.movie.Title</h2>
+                        <p class="category">
+                            Rate: @Model.movie.Rating
+                            <br />Price: @Model.movie.Price$
+                        </p>
+                        <p>@Model.movie.Description</p>
+                        <p>
+                            @Html.ActionLink("Details", "Details", "Movies", new { id = @Model.movie.MovieID }, htmlAttributes: new { @style = "margin-right:16px" })
+
+                            @if (Request.IsAuthenticated)
+                            {
+                                if (User.IsInRole("admin"))
+                                {
+                                    @Html.ActionLink("Edit", "Edit", "Movies", routeValues: new { id = @Model.movie.MovieID }, htmlAttributes: new { @style = "margin-right:16px" })
+                                    @Html.ActionLink("Delete", "Delete", "Movies", routeValues: new { id = @Model.movie.MovieID }, htmlAttributes: new { @style = "margin-right:16px" })
+                                }
+                            }
+
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+ 
+ 
+            </div>
+</section>
+
+
+<div class="slides-text probootstrap-animate fadeInUp probootstrap-animated" style="padding-top: 0; margin-top:-50px">
+    <h3 class="col-md-12">Comments</h3>
+</div>
+
+<section class="probootstrap-animate fadeInUp probootstrap-animated" >
+    <div class="container">
+            <div class="col-md-6 col-md-offset-3">
+
+
+
+
+                <div class="probootstrap-animate" data-animate-effect="fadeInLeft">
+                    <div class="panel-group probootstrap-panel" id="accordion" role="tablist" aria-multiselectable="true">
+
+                        @foreach (var x in @Model.movie.Comments)
+                        {
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h3 class="panel-title" style="margin-bottom:-5px">
+                                        <a role="button" style="margin-bottom:-20px" data-toggle="collapse" data-parent="#accordion"  aria-expanded="true" aria-controls="collapseOne">
+                                            @x.User.FirstName @x.User.LastName
+                                        </a>                                            
+                                    </h3>
+                                    <h6 style="margin-bottom:-10px">@x.AddDate</h6>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        <h4 style="margin-top:-8px"><p>@x.comment1</p></h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                        @if( Request.IsAuthenticated )
+                        {
+                            using (Html.BeginForm("Comment", "Movies", FormMethod.Post))
+                            {
+                                @Html.HiddenFor(x => x.movieID);
+                                <div class="form-group" style="margin-top:50px;">
+                                    <label>Add Comment</label>
+                                    @Html.TextBoxFor(m => m.comment, htmlAttributes: new { @class = "form-control", @autocomplete = "off" })
+                                    @Html.ValidationMessageFor(m => m.comment, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary" id="submit" name="submit" value="Commit">
+                                </div>
+                            }
+                        }
+
+
+
+                    </div>
+                    <!-- END panel-group -->
+                </div>
+
+
+
+                
+            </div>
+        </div>
+</section>
+
+
+<!-- END section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<h2>Details</h2>
+
+<div>
+    <h4>Movy</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MovieID }) |
+    @Html.ActionLink("Back", null, null, null, new { href = Request.UrlReferrer }) 
+</p>*@

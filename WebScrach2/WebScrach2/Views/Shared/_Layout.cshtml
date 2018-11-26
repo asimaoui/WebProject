@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Assignment</title>
+    <meta name="description" content="Movies rating web app">
+    <meta name="keywords" content="Web Assignment">
+    <link rel="stylesheet" href="~/Content/css/styles-merged.css">
+    <link rel="stylesheet" href="~/Content/css/style.min.css">
+    <link rel="stylesheet" href="~/Content/css/custom.css">
+    <style>
+        .btn-search{
+        height: 34px !important;
+    line-height: 1 !important;
+}
+    </style>
+</head>
+
+<body>
+
+
+    <header role="banner" class="probootstrap-header">
+        <div class="container">
+            <a href="/Home/Index" class="probootstrap-logo">Movies<span>.</span></a>
+
+            <a href="#" class="probootstrap-burger-menu visible-xs"><i>Menu</i></a>
+            <div class="mobile-menu-overlay"></div>
+            <nav role="navigation" class="probootstrap-nav hidden-xs">
+                <ul class="probootstrap-main-nav">
+                    <li @*class="active"*@><a href="/Home/Index">Home</a></li>
+                    @Html.Partial("_LoginPartial")
+                </ul>
+
+                <div class="extra-text visible-xs">
+                    <a href="#" class="probootstrap-burger-menu"><i>Menu</i></a>
+                    <h5>Assignment</h5>
+                    <p>Website in Asp.net mvc</p>
+                    @*<h5>Connect</h5>*@
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="probootstrap-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+
+
+    @*<section class="probootstrap-section">
+            <div class="container">
+               @RenderBody()
+            </div>
+        </section>*@
+
+
+                <div class="container body-content">
+               
+
+                    <footer class="probootstrap-footer probootstrap-bg">
+                        <div class="container">
+                            <div class="row mb60">
+                                <div class="col-md-6">
+                                    <div class="probootstrap-footer-widget">
+                                        @*<h4 class="heading">About Black.</h4>
+                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                                        <p><a href="#">Read more...</a></p>*@
+                                        <h4 class="heading">About Movie.</h4>
+                                        <p>Its assignment project of asp.net mvc for movies rating and show detail of plateforms</p>
+                                        @*<p><a href="#">Read more...</a></p>*@
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="probootstrap-footer-widget probootstrap-link-wrap">
+                                        <h4 class="heading">Quick Links</h4>
+                                        <ul class="stack-link">
+                                            <li @*class="active"*@><a href="/Home/Index">Home</a></li>
+                                            @Html.Partial("_LoginPartial")
+                                            @*<li><a href="#">Home</a></li>
+                                            <li><a href="#">About</a></li>
+                                            <li><a href="#">Services</a></li>
+                                            <li><a href="#">Products</a></li>
+                                            <li><a href="#">Testimonial</a></li>*@
+                                        </ul>
+                                    </div>
+                                </div>
+                                @*<div class="col-md-3">
+                                    <div class="probootstrap-footer-widget">
+                                        <h4 class="heading">More Links</h4>
+                                        <ul class="stack-link">
+                                            <li><a href="#">Projects</a></li>
+                                            <li><a href="#">Privacy</a></li>
+                                            <li><a href="#">Terms</a></li>
+                                            <li><a href="#">Career</a></li>
+                                            <li><a href="#">Support Help</a></li>
+                                        </ul>
+                                    </div>
+                                </div>*@
+
+                                @*<div class="col-md-3">
+                                    <div class="probootstrap-footer-widget probootstrap-link-wrap">
+                                        <h4 class="heading">Subscribe</h4>
+                                        <p>Far far away behind the word mountains far from.</p>
+                                        <form action="#">
+                                            <div class="form-field">
+                                                <input type="text" class="form-control" placeholder="Enter your email">
+                                                <button class="btn btn-subscribe">Send</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>*@
+                            </div>
+                            <div class="row copyright">
+                                <div class="col-md-6">
+                                    <div class="probootstrap-footer-widget">
+                                        <p>&copy; 2018 <a href="https://g7.bsmsol.com/">Group7 Website</a></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="probootstrap-footer-widget right">
+                                        <ul class="probootstrap-social">
+                                            @*<li><a href="#"><i class="icon-twitter"></i></a></li>
+                                            <li><a href="#"><i class="icon-facebook"></i></a></li>
+                                            <li><a href="#"><i class="icon-instagram2"></i></a></li>*@
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+
+
+                <script src="~/Content/js/scripts.min.js"></script>
+                <script src="~/Content/js/main.min.js"></script>
+                <script src="~/Content/js/custom.js"></script>
+
+                @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+                    <script src="~/Scripts/bootstrap.min.js"></script>*@
+
+
+
+</body>
+</html>

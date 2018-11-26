@@ -1,0 +1,148 @@
+﻿@model WebScrach2.Models.MovieHome
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+{
+
+    <div class="probootstrap-section">
+        <div class="container">
+            <div class="row">
+                <form>
+                    <div class="form-row">
+                        <div class="col-md-7">
+                            @*<input type="text" class="form-control" placeholder="City">*@
+                            @Html.TextBox("searchString", ViewBag.CurrentFilter as string, null, htmlAttributes: new { @class = "form-control", @placeholder = "Search" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(m => m.dropdownID, (SelectList)ViewBag.CatelogComponent, "All", htmlAttributes: new { @class = "form-control" })
+                            @*@Html.DropDownListFor(m => m.dropdownID, (SelectList)ViewBag.CatelogComponent, "All")*@
+
+
+                            @*<select class="form-control">
+                                <option selected>Open this select menu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>*@
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary btn-search">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+
+<section class="probootstrap-section">
+    <div class="container">
+        <div class="row" style="margin-bottom:-20px; margin-top:-100px">
+            <div class="col-md-12 section-heading probootstrap-animate">
+                <h2>The Projects</h2>
+            </div>
+        </div>
+
+        @if (Request.IsAuthenticated)
+        {
+            if (User.IsInRole("admin"))
+            {
+                <p>
+                    @Html.ActionLink("Add Movie", "Create", "Movies" )
+                </p>
+            }
+        }
+
+    @for (int x = 0; x < Model.movis.Count; x++)
+        {
+
+            var m = @Model.movis[x];
+        
+            <div class="col-md-4 probootstrap-animate">
+                <div class="probootstrap-card">
+                    <div class="probootstrap-card-media">
+                        <a href="/Movies/Details/@m.MovieID"><img src="@m.Image" class="img-responsive img-border" alt=""></a>
+                    </div>
+                    <div class="probootstrap-card-text">
+                        <h2 class="probootstrap-card-heading mb0">@m.Title</h2>
+                        <p class="category">Rate: @m.Rating
+                        <br/>Price: @m.Price$</p>                         
+                        <p style="line-height: 1.5em; height: 6em; overflow: hidden; text-overflow: ellipsis;">@m.Description</p>
+                        <p>
+                            @Html.ActionLink("Details", "Details", "Movies", new { id = @m.MovieID }, htmlAttributes: new { @style = "margin-right:16px" })
+
+                            @if (Request.IsAuthenticated)
+                            {
+                                if (User.IsInRole("admin"))
+                                {
+                                    @Html.ActionLink("Edit", "Edit", "Movies", routeValues: new { id = @m.MovieID }, htmlAttributes: new { @style = "margin-right:16px" })
+                                    @Html.ActionLink("Delete", "Delete", "Movies", routeValues: new { id = @m.MovieID }, htmlAttributes: new { @style = "margin-right:16px" })
+                                }
+                            }
+                           
+                        </p>
+                    </div>
+                </div>
+            </div>
+          }
+        </div>
+</section>
+<!-- END section -->
+
+
+
+
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.movis.FirstOrDefault().Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.movis.FirstOrDefault().Description)
+        </th>         
+        <th>
+            @Html.DisplayNameFor(model => model.movis.FirstOrDefault().Rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.movis.FirstOrDefault().Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.movis.FirstOrDefault().Image)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.movis)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>             
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MovieID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MovieID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MovieID })
+            </td>
+        </tr>
+    }
+</table>*@
+

@@ -1,0 +1,24 @@
+﻿@*@using Microsoft.AspNet.Identity*@
+@if (Request.IsAuthenticated)
+{
+
+    if (User.IsInRole("admin"))
+    {
+        <li >@Html.ActionLink("New Admin", "RegisterAdmin", "Auth")</li>
+    }
+    <li >@Html.ActionLink(@*User.Identity.Name*@ "Change Password", "ChangePassword", "Auth", routeValues: new { UserName = User.Identity.Name }, htmlAttributes: new { title = "Manage" })
+    </li>
+
+    <li>@Html.ActionLink("Logout", "Logout", "Auth")</li>
+
+
+}
+else
+{
+    @*if (User.IsInRole("customer"))
+    {
+        <li >@Html.ActionLink("New User", "RegisterCustomer", "Auth", routeValues: null, htmlAttributes: new { id = "loginLink"})</li>
+    }*@
+    <li>@Html.ActionLink("New User", "RegisterCustomer", "Auth", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    <li >@Html.ActionLink("Log in", "Login", "Auth", routeValues: null, htmlAttributes: new { id = "loginLink"  })</li>
+}

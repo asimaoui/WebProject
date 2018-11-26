@@ -1,0 +1,594 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="amugh786_aziz_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CatelogComponent">
+          <Key>
+            <PropertyRef Name="ComponentID" />
+          </Key>
+          <Property Name="ComponentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="comment" Type="nvarchar(max)" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="AddDate" Type="datetime" />
+          <Property Name="MovieID" Type="int" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="MovieLinkGenre">
+          <Key>
+            <PropertyRef Name="MLGID" />
+          </Key>
+          <Property Name="MLGID" Type="int" Nullable="false" />
+          <Property Name="MovieID" Type="int" />
+          <Property Name="GenreID" Type="int" />
+        </EntityType>
+        <EntityType Name="MovieLinkPlatform">
+          <Key>
+            <PropertyRef Name="MLPID" />
+          </Key>
+          <Property Name="MLPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MovieID" Type="int" />
+          <Property Name="PlatformID" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Plateform">
+          <Key>
+            <PropertyRef Name="PlateformID" />
+          </Key>
+          <Property Name="PlateformID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="RatingId" />
+          </Key>
+          <Property Name="RatingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="MovieId" Type="int" />
+          <Property Name="AddDtate" Type="datetime" />
+          <Property Name="Rating" Type="float" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserNameOrEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="ExpiredDate" Type="datetime" />
+          <Property Name="IsAdmin" Type="bit" />
+        </EntityType>
+        <EntityType Name="Movies">
+          <Key>
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="MovieID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Rating" Type="float" />
+          <Property Name="Price" Type="float" />
+          <Property Name="Image" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_Comments_Movies">
+          <End Role="Movies" Type="Self.Movies" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieLinkGenre_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
+          <End Role="MovieLinkGenre" Type="Self.MovieLinkGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MovieLinkGenre">
+              <PropertyRef Name="GenreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieLinkGenre_Movies">
+          <End Role="Movies" Type="Self.Movies" Multiplicity="0..1" />
+          <End Role="MovieLinkGenre" Type="Self.MovieLinkGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="MovieLinkGenre">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieLinkPlatform_Movies">
+          <End Role="Movies" Type="Self.Movies" Multiplicity="0..1" />
+          <End Role="MovieLinkPlatform" Type="Self.MovieLinkPlatform" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="MovieLinkPlatform">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieLinkPlatform_Plateform">
+          <End Role="Plateform" Type="Self.Plateform" Multiplicity="0..1" />
+          <End Role="MovieLinkPlatform" Type="Self.MovieLinkPlatform" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plateform">
+              <PropertyRef Name="PlateformID" />
+            </Principal>
+            <Dependent Role="MovieLinkPlatform">
+              <PropertyRef Name="PlatformID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rating_Movies">
+          <End Role="Movies" Type="Self.Movies" Multiplicity="0..1" />
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rating_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="amugh786_aziz_dbModelStoreContainer">
+          <EntitySet Name="CatelogComponent" EntityType="Self.CatelogComponent" Schema="amugh786_dbuser" store:Type="Tables" />
+          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="amugh786_dbuser" store:Type="Tables" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" Schema="amugh786_dbuser" store:Type="Tables" />
+          <EntitySet Name="MovieLinkGenre" EntityType="Self.MovieLinkGenre" Schema="amugh786_dbuser" store:Type="Tables" />
+          <EntitySet Name="MovieLinkPlatform" EntityType="Self.MovieLinkPlatform" Schema="amugh786_dbuser" store:Type="Tables" />
+          <EntitySet Name="Plateform" EntityType="Self.Plateform" Schema="amugh786_dbuser" store:Type="Tables" />
+          <EntitySet Name="Rating" EntityType="Self.Rating" Schema="amugh786_dbuser" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="amugh786_dbuser" store:Type="Tables" />
+          <EntitySet Name="Movies" EntityType="Self.Movies" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comments_Movies" Association="Self.FK_Comments_Movies">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_Users" Association="Self.FK_Comments_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieLinkGenre_Genre" Association="Self.FK_MovieLinkGenre_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="MovieLinkGenre" EntitySet="MovieLinkGenre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieLinkGenre_Movies" Association="Self.FK_MovieLinkGenre_Movies">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="MovieLinkGenre" EntitySet="MovieLinkGenre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieLinkPlatform_Movies" Association="Self.FK_MovieLinkPlatform_Movies">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="MovieLinkPlatform" EntitySet="MovieLinkPlatform" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieLinkPlatform_Plateform" Association="Self.FK_MovieLinkPlatform_Plateform">
+            <End Role="Plateform" EntitySet="Plateform" />
+            <End Role="MovieLinkPlatform" EntitySet="MovieLinkPlatform" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rating_Movies" Association="Self.FK_Rating_Movies">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="Rating" EntitySet="Rating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rating_Users" Association="Self.FK_Rating_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Rating" EntitySet="Rating" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="amugh786_aziz_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CatelogComponent">
+          <Key>
+            <PropertyRef Name="ComponentID" />
+          </Key>
+          <Property Name="ComponentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="comment1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="AddDate" Type="DateTime" Precision="3" />
+          <Property Name="MovieID" Type="Int32" />
+          <NavigationProperty Name="Movy" Relationship="Self.FK_Comments_Movies" FromRole="Comments" ToRole="Movies" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Comments_Users" FromRole="Comments" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MovieLinkGenres" Relationship="Self.FK_MovieLinkGenre_Genre" FromRole="Genre" ToRole="MovieLinkGenre" />
+        </EntityType>
+        <EntityType Name="MovieLinkGenre">
+          <Key>
+            <PropertyRef Name="MLGID" />
+          </Key>
+          <Property Name="MLGID" Type="Int32" Nullable="false" />
+          <Property Name="MovieID" Type="Int32" />
+          <Property Name="GenreID" Type="Int32" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_MovieLinkGenre_Genre" FromRole="MovieLinkGenre" ToRole="Genre" />
+          <NavigationProperty Name="Movy" Relationship="Self.FK_MovieLinkGenre_Movies" FromRole="MovieLinkGenre" ToRole="Movies" />
+        </EntityType>
+        <EntityType Name="MovieLinkPlatform">
+          <Key>
+            <PropertyRef Name="MLPID" />
+          </Key>
+          <Property Name="MLPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MovieID" Type="Int32" />
+          <Property Name="PlatformID" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Movy" Relationship="Self.FK_MovieLinkPlatform_Movies" FromRole="MovieLinkPlatform" ToRole="Movies" />
+          <NavigationProperty Name="Plateform" Relationship="Self.FK_MovieLinkPlatform_Plateform" FromRole="MovieLinkPlatform" ToRole="Plateform" />
+        </EntityType>
+        <EntityType Name="Plateform">
+          <Key>
+            <PropertyRef Name="PlateformID" />
+          </Key>
+          <Property Name="PlateformID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="MovieLinkPlatforms" Relationship="Self.FK_MovieLinkPlatform_Plateform" FromRole="Plateform" ToRole="MovieLinkPlatform" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="RatingId" />
+          </Key>
+          <Property Name="RatingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="MovieId" Type="Int32" />
+          <Property Name="AddDtate" Type="DateTime" Precision="3" />
+          <Property Name="Rating1" Type="Double" />
+          <NavigationProperty Name="Movy" Relationship="Self.FK_Rating_Movies" FromRole="Rating" ToRole="Movies" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Rating_Users" FromRole="Rating" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserNameOrEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="ExpiredDate" Type="DateTime" Precision="3" />
+          <Property Name="IsAdmin" Type="Boolean" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Users" FromRole="Users" ToRole="Comments" />
+          <NavigationProperty Name="Ratings" Relationship="Self.FK_Rating_Users" FromRole="Users" ToRole="Rating" />
+        </EntityType>
+        <EntityType Name="Movy">
+          <Key>
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="MovieID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="Double" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Movies" FromRole="Movies" ToRole="Comments" />
+          <NavigationProperty Name="MovieLinkGenres" Relationship="Self.FK_MovieLinkGenre_Movies" FromRole="Movies" ToRole="MovieLinkGenre" />
+          <NavigationProperty Name="MovieLinkPlatforms" Relationship="Self.FK_MovieLinkPlatform_Movies" FromRole="Movies" ToRole="MovieLinkPlatform" />
+          <NavigationProperty Name="Ratings" Relationship="Self.FK_Rating_Movies" FromRole="Movies" ToRole="Rating" />
+        </EntityType>
+        <Association Name="FK_Comments_Movies">
+          <End Role="Movies" Type="Self.Movy" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieLinkGenre_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
+          <End Role="MovieLinkGenre" Type="Self.MovieLinkGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MovieLinkGenre">
+              <PropertyRef Name="GenreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieLinkGenre_Movies">
+          <End Role="Movies" Type="Self.Movy" Multiplicity="0..1" />
+          <End Role="MovieLinkGenre" Type="Self.MovieLinkGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="MovieLinkGenre">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieLinkPlatform_Movies">
+          <End Role="Movies" Type="Self.Movy" Multiplicity="0..1" />
+          <End Role="MovieLinkPlatform" Type="Self.MovieLinkPlatform" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="MovieLinkPlatform">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieLinkPlatform_Plateform">
+          <End Role="Plateform" Type="Self.Plateform" Multiplicity="0..1" />
+          <End Role="MovieLinkPlatform" Type="Self.MovieLinkPlatform" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plateform">
+              <PropertyRef Name="PlateformID" />
+            </Principal>
+            <Dependent Role="MovieLinkPlatform">
+              <PropertyRef Name="PlatformID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rating_Movies">
+          <End Role="Movies" Type="Self.Movy" Multiplicity="0..1" />
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rating_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="amugh786_aziz_dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CatelogComponents" EntityType="Self.CatelogComponent" />
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="Genres" EntityType="Self.Genre" />
+          <EntitySet Name="MovieLinkGenres" EntityType="Self.MovieLinkGenre" />
+          <EntitySet Name="MovieLinkPlatforms" EntityType="Self.MovieLinkPlatform" />
+          <EntitySet Name="Plateforms" EntityType="Self.Plateform" />
+          <EntitySet Name="Ratings" EntityType="Self.Rating" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Movies" EntityType="Self.Movy" />
+          <AssociationSet Name="FK_Comments_Movies" Association="Self.FK_Comments_Movies">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_Users" Association="Self.FK_Comments_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieLinkGenre_Genre" Association="Self.FK_MovieLinkGenre_Genre">
+            <End Role="Genre" EntitySet="Genres" />
+            <End Role="MovieLinkGenre" EntitySet="MovieLinkGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieLinkGenre_Movies" Association="Self.FK_MovieLinkGenre_Movies">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="MovieLinkGenre" EntitySet="MovieLinkGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieLinkPlatform_Movies" Association="Self.FK_MovieLinkPlatform_Movies">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="MovieLinkPlatform" EntitySet="MovieLinkPlatforms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieLinkPlatform_Plateform" Association="Self.FK_MovieLinkPlatform_Plateform">
+            <End Role="Plateform" EntitySet="Plateforms" />
+            <End Role="MovieLinkPlatform" EntitySet="MovieLinkPlatforms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rating_Movies" Association="Self.FK_Rating_Movies">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rating_Users" Association="Self.FK_Rating_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="amugh786_aziz_dbModelStoreContainer" CdmEntityContainer="amugh786_aziz_dbEntities">
+          <EntitySetMapping Name="CatelogComponents">
+            <EntityTypeMapping TypeName="amugh786_aziz_dbModel.CatelogComponent">
+              <MappingFragment StoreEntitySet="CatelogComponent">
+                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="amugh786_aziz_dbModel.Comment">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="comment1" ColumnName="comment" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="AddDate" ColumnName="AddDate" />
+                <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="amugh786_aziz_dbModel.Genre">
+              <MappingFragment StoreEntitySet="Genre">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MovieLinkGenres">
+            <EntityTypeMapping TypeName="amugh786_aziz_dbModel.MovieLinkGenre">
+              <MappingFragment StoreEntitySet="MovieLinkGenre">
+                <ScalarProperty Name="MLGID" ColumnName="MLGID" />
+                <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+                <ScalarProperty Name="GenreID" ColumnName="GenreID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MovieLinkPlatforms">
+            <EntityTypeMapping TypeName="amugh786_aziz_dbModel.MovieLinkPlatform">
+              <MappingFragment StoreEntitySet="MovieLinkPlatform">
+                <ScalarProperty Name="MLPID" ColumnName="MLPID" />
+                <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+                <ScalarProperty Name="PlatformID" ColumnName="PlatformID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Plateforms">
+            <EntityTypeMapping TypeName="amugh786_aziz_dbModel.Plateform">
+              <MappingFragment StoreEntitySet="Plateform">
+                <ScalarProperty Name="PlateformID" ColumnName="PlateformID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="amugh786_aziz_dbModel.Rating">
+              <MappingFragment StoreEntitySet="Rating">
+                <ScalarProperty Name="RatingId" ColumnName="RatingId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="MovieId" ColumnName="MovieId" />
+                <ScalarProperty Name="AddDtate" ColumnName="AddDtate" />
+                <ScalarProperty Name="Rating1" ColumnName="Rating" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="amugh786_aziz_dbModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="UserNameOrEmail" ColumnName="UserNameOrEmail" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movies">
+            <EntityTypeMapping TypeName="amugh786_aziz_dbModel.Movy">
+              <MappingFragment StoreEntitySet="Movies">
+                <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

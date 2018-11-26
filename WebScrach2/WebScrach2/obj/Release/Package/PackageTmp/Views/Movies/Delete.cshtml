@@ -1,0 +1,68 @@
+﻿@model WebScrach2.Models.Movy
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div>
+
+    <section class="probootstrap-section">
+        <div class="container">
+            <div class="row" style="margin-bottom:-20px; ">
+                <div class="col-md-12 section-heading probootstrap-animate">
+                    <h3>Delete</h3>
+                    <h4>Are you sure you want to delete this?</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="probootstrap-card">
+                        <div class="probootstrap-card-media">
+                            <a href="/Movies/Details/@Model.MovieID"><img src="@Model.Image" class="img-responsive img-border" alt=""></a>
+                        </div>
+                        <div class="probootstrap-card-text">
+                            <h2 class="probootstrap-card-heading mb0">@Model.Title</h2>
+                            <p class="category">
+                                Rate: @Model.Rating
+                                <br />Price: @Model.Price$
+                            </p>
+                            <p >@Model.Description</p>
+                            <p>
+                                @Html.ActionLink("Details", "Details", "Movies", new { id = @Model.MovieID }, htmlAttributes: new { @style = "margin-right:16px" })
+
+                                @if (Request.IsAuthenticated)
+                                {
+                                    if (User.IsInRole("admin"))
+                                    {
+                                        @Html.ActionLink("Edit", "Edit", "Movies", routeValues: new { id = @Model.MovieID }, htmlAttributes: new { @style = "margin-right:16px" })
+                                        @Html.ActionLink("Delete", "Delete", "Movies", routeValues: new { id = @Model.MovieID }, htmlAttributes: new { @style = "margin-right:16px" })
+                                    }
+                                }
+
+                            </p>
+                        </div>
+                    </div>
+
+
+
+                    @using (Html.BeginForm())
+                    {
+
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" id="submit" name="submit" value="Delete">
+                        </div>
+                        
+                        <div class="form-actions no-color">
+                            @*<input type="submit" value="Delete" class="btn btn-default" /> |*@
+                            @Html.ActionLink("Back", null, null, null, new { href = Request.UrlReferrer })
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    
+</div>
